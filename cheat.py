@@ -2,49 +2,69 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-from gui import GUI
+from utils.gui import GUI
+from utils.cheatsheet import CS
+
+
 
 
 # Default directory for the cheatsheets
 
 ## !Set this value to the path with your cheatsheets!
-cs_directory = os.path.expanduser("cheatsheets")
+cs_directory = os.path.dirname(os.path.realpath(__file__)) + "\\..\\cheatsheets"
 
 
-if len(sys.argv) == 1 or len(sys.argv) > 2:
-    print "Usage: cheat.py <cheatsheet name>\n\nOptions:\n\t-l, --list\tprints available cheatsheets"
+""" Prints the cheat.py usage message """
+def usage():
+        print "Usage: cheat.py <cheatsheet name>\n\nOptions:\n\t-l, --list\tprints available cheatsheets"
+
+""" Parses the contents of the cheatsheet folder """
+def walkFolders(cs_name, out=False):
+    global cs_directory
+    cheatsheet = None
+
+    # Loop through all files in this directory
+    for root, dirs, files in os.walk(cs_directory):
+        for fl in files:
+            if cs_name and cs_name in fl:
+                # first cheatsheet found
+                cheatsheet = CS(os.path.join(root, fl), fl, os.path.basename(root))
+                break
+            if out:
+                print "- " + fl
+
+    if cheatsheet:
+        return cheatsheet
+    return None
+
+
+
+if len(sys.argv) == 1:
+    usage()
     exit(1)
 
-# get sheets
+
+
+
 # TODO: order by theme and index the sheets
 cs_name = sys.argv[1]
-sheets = os.listdir(cs_directory)
 
-# print all them
+# Command line Arguments
 # TODO: change if too much sheets to print
 if cs_name == "--list" or cs_name == "-l":
-    for item in sheets:
-        print "* " + item
+    walkFolders(None, True)
     exit(1)
 
+# Try to get the cheatsheet
+cheatsheet = walkFolders(cs_name)
 
-# Search the cheatsheets
-for item in sheets:
-    if cs_name in item.lower():
-        fname = item
-        break
-else:
-    fname = 0
-
-
-if not fname:
+if not cheatsheet:
     print "[-] Cheatsheet not found..."
     exit(1)
 
-os.chdir(cs_directory)
 
 # Gui stuff, found in gui.py
-with GUI(fname) as gui:
+with GUI(cheatsheet) as gui:
     gui.genWindows()
     gui.fillContent()
     while 1:

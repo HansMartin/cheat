@@ -2,20 +2,23 @@
 import curses
 import linecache
 import re
-import os
+
+# for the CS Class
+from cheatsheet import CS
 
 class GUI:
 
-    status_base = "Cheatsheet %s line %d (Press q to quit)"
+    status_base = "Cheatsheet %s (%s) line %d (Press q to quit)"
 
     # Keep track of line/col
     current_line = 1
     current_col = 1
 
     """ Setup Settings/Variables """
-    def __init__(self, cs_name):
+    def __init__(self, cheatsheet):
 
-        self.cs_name = cs_name
+        # parsing CS()
+        self.cs = cheatsheet
 
         # Use stdscr as global object
         self.stdscr = self.initCurses()
@@ -51,16 +54,16 @@ class GUI:
         if not self.status_win or not self.content_pad:
             raise NameError("Window and/or Pad not initialized")
 
-        status_msg = self.status_base % (self.cs_name, self.current_line)
+        status_msg = self.status_base % (self.cs.cs_name, self.cs.topic, self.current_line)
         self.status_win.clear()
         self.status_win.addstr(0, 0, status_msg[:self.maxx-1], curses.color_pair(1))
         self.status_win.refresh()
 
     def getLineNum(self):
-        return sum([1 for line in open(self.cs_name)])
+        return sum([1 for line in open(self.cs.full_path)])
 
     def getColNum(self):
-        return max([len(line) for line in open(self.cs_name)])
+        return max([len(line) for line in open(self.cs.full_path)])
 
     """ Generate the Status Windows and the Content Pad """
     def genWindows(self):
@@ -80,7 +83,7 @@ class GUI:
     """ Get the content of the Cheatshet and put it in the Pad """
     def fillContent(self):
         for i in xrange(self.num_lines + 1):
-            line = linecache.getline(self.cs_name, i)
+            line = linecache.getline(self.cs.full_path, i)
             self.parser(self.content_pad, i, line)
 
 
