@@ -6,7 +6,7 @@ Cheat is a python script for viewing self-written _cheatsheets_ about various to
 
 ### Installation
 
-_Requirements_: curses 2.2 Lib vor Windows and Linux (comes pre-installed on Linux)
+_Requirements_: curses 2.2 for Windows and Linux (comes pre-installed on Linux)
 
 _Note_: its not tested on python3.X
 
