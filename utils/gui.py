@@ -5,6 +5,8 @@ import re
 
 # for the CS Class
 from cheatsheet import CS
+from parser import preparser
+
 
 class GUI:
 
@@ -82,12 +84,18 @@ class GUI:
 
     """ Get the content of the Cheatshet and put it in the Pad """
     def fillContent(self):
+
+    	lnCount = 1
         for i in xrange(self.num_lines + 1):
-            line = linecache.getline(self.cs.full_path, i)
-            self.parser(self.content_pad, i, line)
+        	pre = preparser()
+        	line = pre.parse(linecache.getline(self.cs.full_path, i))
+        	if line: 
+        		self.parser(self.content_pad, lnCount, line)
+        		lnCount += 1
 
-
-    """ Fucked up color parser """
+    """ Fucked up color parser, 
+        used for curses specific colors
+    """
     def parser(self, pad, y, line):
 
 

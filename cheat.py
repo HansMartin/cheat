@@ -11,7 +11,7 @@ from utils.cheatsheet import CS
 # Default directory for the cheatsheets
 
 ## !Set this value to the path with your cheatsheets!
-cs_directory = os.path.dirname(os.path.realpath(__file__)) + "\\..\\cheatsheets"
+cs_directory = os.path.dirname(os.path.realpath(__file__)) + "/../cheatsheets"
 
 
 """ Prints the cheat.py usage message """
