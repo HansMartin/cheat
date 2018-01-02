@@ -167,12 +167,7 @@ class GUI:
         pad.move(0, 0)
 
 
-        ### Some more formating of the text ###
-        #
-        # * Changing the * to a diamond for bullet lists
         # * Changing ---- to a hor. line
-        # ...
-
         if not formatThere:
             # Changing lines with ----- to a full line
             if sum([1 for x in line if x == "-"]) == len(line)-1 and len(line) > 5:
@@ -181,10 +176,10 @@ class GUI:
             else:
                 pad.addstr(y, 1, line)
 
-        # Replace * with a diamond for bullet lists
-        for i, ch in enumerate(line):
-            if ch == "*" and line[i+1] == " ":
-                pad.addch(y, i+1, curses.ACS_DIAMOND)
+        # Replace * and - with a diamond for bullet lists
+        if line.startswith("* ") or line.startswith("- "):
+                pad.addch(y, 1, curses.ACS_DIAMOND)
+
 
 
     """ Called when the Terminal resizes """
@@ -230,5 +225,7 @@ class GUI:
                 self.current_line = self.num_lines - (self.maxy-3)
                 if self.current_line <= 0:
                     self.current_line=1
-
-
+        # Reset to (1/1)
+        elif c == ord("0"):
+            self.current_line = 1
+            self.current_col = 1

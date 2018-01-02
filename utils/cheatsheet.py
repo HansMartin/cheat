@@ -5,4 +5,7 @@ class CS:
         self.cs_name = cs_name
         self.topic = topic_class
 
-
+        # Cheatsheet Metadata (not used)
+        self.author = ""
+        self.ref = []
+        self.tags = []

@@ -34,6 +34,7 @@ Options:
 * Move with the *Arrow-Keys* or *vim-bindings(HJKL)* through the file
 * *g* to move curser to first line
 * *G* to move curser to last line
+* *0* to set position to (1/1)
 
 ## Cheatsheets
 
@@ -44,7 +45,11 @@ Basically just plain ascii-text
 Some specialities:
 
 - "* "      : gets replaced with a bullet
+- "- "      : gets replaced with a bullet
 - "------"  : gets replaced with horizintal lines
+
+lines starting with a "# " are automatically bold
+
 
 ### Format to colorize text:
 
