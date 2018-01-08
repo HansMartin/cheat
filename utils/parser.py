@@ -9,7 +9,7 @@ class preparser:
                      "ref":[]
                      }
 
-    
+
     """ Some Mardown like syntax parsing. """
     def parse(self, ln):
         if self.getMeta(ln):
@@ -18,10 +18,10 @@ class preparser:
         if ln.startswith("# "):
             ln = "{at=bold}" + ln[2:-1] + "{end}"
         elif ln.startswith("## "):
-            ln = "{at=bold}" + ln[3:-1] + "{end}" 
+            ln = "{at=bold}" + ln[3:-1] + "{end}"
         elif ln.startswith("### "):
-            ln = "{at=bold}" + ln[4:-1] + "{end}" 
-       
+            ln = "{at=bold}" + ln[4:-1] + "{end}"
+
         return ln
 
     def getMeta(self, ln):
